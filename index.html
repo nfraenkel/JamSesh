@@ -1,15 +1,47 @@
 <!DOCTYPE html>
 
 <html>
+	<head>
+    <title>JAMSE$H</title>
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <!-- SocketIO -->
+    <script>
+      var socket = io.connect('http://localhost');
+      socket.on('news', function (data) {
+        console.log(data);
+        socket.emit('my other event', { my: 'data' });
+      });
+    </script>
 
-	<title>JAMSE$H</title>
-	<script src="/socket.io/socket.io.js"></script>
-	<script>
-	  var socket = io.connect('http://localhost');
-	  socket.on('news', function (data) {
-	    console.log(data);
-	    socket.emit('my other event', { my: 'data' });
-	  });
-	</script>
-
+    <!-- jquery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    
+    <!-- music.js -->
+    <script src="music.js" type="text/javascript"></script>
+    
+    <!-- gets keypresses -->
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $("input").keypress(function (e) {
+            if (e.which == 32 || (65 <= e.which && e.which <= 65 + 25)
+            || (97 <= e.which && e.which <= 97 + 25)) {
+        var c = String.fromCharCode(e.which);
+        $("p").append($("<span/>"))
+              .children(":last")
+              .append(document.createTextNode(c));
+            } else if (e.which == 8) {
+        // backspace in IE only be on keydown
+        $("p").children(":last").remove();
+            }
+            $("div").text(e.which);
+          });
+      });		
+    </script>
+	</head>
+	<body>
+		<input type="text" />
+		<p>Add text - </p>
+		<div></div>
+	</body>
 </html>
